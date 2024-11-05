@@ -149,10 +149,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "i2c_detect"
+version = "0.1.0"
+dependencies = [
+ "arduino-hal",
+ "embedded-hal 1.0.0",
+ "nb 1.1.0",
+ "panic-halt",
+ "proc-macro2",
+ "ufmt",
+]
+
+[[package]]
 name = "lib"
 version = "0.1.0"
 dependencies = [
  "arduino-hal",
+ "tcs3472",
  "ufmt",
 ]
 
@@ -216,6 +229,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "tcs3472"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7fb564b0467fca5ad375bb744ee605ec14b4db4affc450bb7061e144834dec4d"
+dependencies = [
+ "embedded-hal 0.2.7",
 ]
 
 [[package]]

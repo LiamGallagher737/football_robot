@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["goalie", "attack", "lib"]
+members = ["goalie", "attack", "lib", "tools/i2c_detect"]
 
 # Configure the build for minimal size - AVRs have very little program memory
 [profile.dev]
