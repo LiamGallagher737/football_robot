@@ -32,3 +32,5 @@ cargo run -p goalie # or attack
 ## Project Layout
 
 Each robot, [`goalie`](goalie) and [`attack`](attack), have their own Rust crate for their game logic. Anything not related to game logic like reading sensors and controlling motors goes in the shared [`lib`](lib) crate that both robot crates depend on.
+
+There are also other crates under the [tools](tools) directory that you may find useful. They can be run the same way as the goalie or attack crates, just use the name of the tool instead.
