@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["goalie", "attack", "lib", "tools/i2c_detect"]
+members = ["goalie", "attack", "lib", "tools/i2c_detect", "tools/print_color"]
 
 [workspace.dependencies.arduino-hal]
 git = "https://github.com/rahix/avr-hal"
