@@ -9,6 +9,8 @@ bench = false
 
 [dependencies]
 ufmt = "0.2.0"
+libm = "0.2.0"
+tcs3472 = "0.2.0"
 
 [dependencies.arduino-hal]
 git = "https://github.com/rahix/avr-hal"
