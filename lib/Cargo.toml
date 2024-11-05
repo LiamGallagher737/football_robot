@@ -11,8 +11,4 @@ bench = false
 ufmt = "0.2.0"
 libm = "0.2.0"
 tcs3472 = "0.2.0"
-
-[dependencies.arduino-hal]
-git = "https://github.com/rahix/avr-hal"
-rev = "3e362624547462928a219c40f9ea8e3a64f21e5f"
-features = ["arduino-mega2560"]
+arduino-hal.workspace = true
