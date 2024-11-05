@@ -8,7 +8,7 @@ test = false
 bench = false
 
 [dependencies]
-ufmt = "0.2.0"
 libm = "0.2.0"
 tcs3472 = "0.2.0"
+ufmt.workspace = true
 arduino-hal.workspace = true

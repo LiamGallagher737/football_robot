@@ -9,10 +9,10 @@ test = false
 bench = false
 
 [dependencies]
-panic-halt = "0.2.0"
-ufmt = "0.2.0"
-nb = "1.1.0"
-embedded-hal = "1.0"
+panic-halt.workspace = true
+ufmt.workspace = true
+nb.workspace = true
+embedded-hal.workspace = true
 arduino-hal.workspace = true
 
 # The latest releases of `proc-macro2` do not support the rust toolchain that

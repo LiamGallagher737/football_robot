@@ -2,6 +2,12 @@
 resolver = "2"
 members = ["goalie", "attack", "lib", "tools/i2c_detect", "tools/print_color"]
 
+[workspace.dependencies]
+panic-halt = "0.2.0"
+ufmt = "0.2.0"
+nb = "1.1.0"
+embedded-hal = "1.0"
+
 [workspace.dependencies.arduino-hal]
 git = "https://github.com/rahix/avr-hal"
 rev = "3e362624547462928a219c40f9ea8e3a64f21e5f"
