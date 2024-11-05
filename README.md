@@ -21,6 +21,14 @@ This project requires nightly Rust and to avoid weird bugs from mismatching vers
 [`avr-hal` README]: https://github.com/Rahix/avr-hal#readme
 [`ravedude`]: https://crates.io/crates/ravedude
 
+## Flashing and running the code
+
+After conencting the Arduino to your computer you can run the following commands to flash the code to the Arduino and start reading the serial port.
+
+```sh
+cargo run -p goalie # or attack
+```
+
 ## Project Layout
 
 Each robot, [`goalie`](goalie) and [`attack`](attack), have their own Rust crate for their game logic. Anything not related to game logic like reading sensors and controlling motors goes in the shared [`lib`](lib) crate that both robot crates depend on.
