@@ -37,7 +37,7 @@ struct MotorPins<TC, EN, PH> {
 }
 
 impl Motors {
-    /// Setup a new instance of [`Motors`]. Use the [`motors`] macro rather than this directly.
+    /// Setup a new instance of [`Motors`]. Use the [`crate::motors!`] macro rather than this directly.
     pub fn new(
         tc1: TC1,
         tc2: TC2,
