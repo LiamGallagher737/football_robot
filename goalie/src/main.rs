@@ -4,6 +4,9 @@
 use lib::{color::ColorSensor, compass::Compass};
 use panic_halt as _;
 
+const X_OFFSET: i16 = 747;
+const Y_OFFSET: i16 = -718;
+
 #[arduino_hal::entry]
 fn main() -> ! {
     let dp = arduino_hal::Peripherals::take().unwrap();
@@ -19,7 +22,7 @@ fn main() -> ! {
 
     let bus = shared_bus::BusManagerSimple::new(i2c);
 
-    let mut compass = Compass::new(bus.acquire_i2c()).unwrap();
+    let mut compass = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET).unwrap();
     let mut color_sensor = ColorSensor::new(bus.acquire_i2c()).unwrap();
 
     loop {
