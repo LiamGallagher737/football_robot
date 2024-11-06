@@ -1,16 +1,14 @@
-use arduino_hal::I2c;
-use tcs3472::{AllChannelMeasurement, Tcs3472};
+use embedded_hal::i2c::I2c;
+use tcs3472::{AllChannelMeasurement, Error, Tcs3472};
 use ufmt::derive::uDebug;
 
-type Error = tcs3472::Error<arduino_hal::i2c::Error>;
-
-pub struct ColorSensor {
-    sensor: Tcs3472<I2c>,
+pub struct ColorSensor<I2C: I2c> {
+    sensor: Tcs3472<I2C>,
 }
 
-impl ColorSensor {
+impl<I2C: I2c<Error = E>, E> ColorSensor<I2C> {
     /// Setup a new instance of [`ColorSensor`].
-    pub fn new(i2c: I2c) -> Result<Self, Error> {
+    pub fn new(i2c: I2C) -> Result<Self, Error<E>> {
         let mut sensor = Tcs3472::new(i2c);
         sensor.enable()?;
         sensor.enable_rgbc()?;
@@ -19,7 +17,7 @@ impl ColorSensor {
     }
 
     /// Read the [`Color`] from the sensor.
-    pub fn read(&mut self) -> Result<Color, Error> {
+    pub fn read(&mut self) -> Result<Color, Error<E>> {
         let AllChannelMeasurement {
             red, green, blue, ..
         } = self.sensor.read_all_channels()?;

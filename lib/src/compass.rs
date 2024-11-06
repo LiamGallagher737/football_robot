@@ -1,15 +1,15 @@
-use arduino_hal::I2c;
+use embedded_hal::i2c::I2c;
 use lis3mdl::{Address, Error, I16xyz, Lis3mdl};
 
 const X_OFFSET: i16 = 747;
 const Y_OFFSET: i16 = -718;
 
-pub struct Compass {
-    device: Lis3mdl<I2c>,
+pub struct Compass<I2C: I2c> {
+    device: Lis3mdl<I2C>,
 }
 
-impl Compass {
-    pub fn new(i2c: I2c) -> Result<Self, Error> {
+impl<I2C: I2c> Compass<I2C> {
+    pub fn new(i2c: I2C) -> Result<Self, Error> {
         let mut device = Lis3mdl::new(i2c, Address::Addr1C)?;
         let _ = device.set_temperature_sensor_enable(false);
         Ok(Self { device })

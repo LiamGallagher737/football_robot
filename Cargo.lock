@@ -165,6 +165,7 @@ dependencies = [
  "nb 1.1.0",
  "panic-halt",
  "proc-macro2",
+ "shared-bus",
  "ufmt",
 ]
 
@@ -185,6 +186,7 @@ name = "lib"
 version = "0.1.0"
 dependencies = [
  "arduino-hal",
+ "embedded-hal 1.0.0",
  "libm",
  "lis3mdl",
  "tcs3472",
@@ -277,6 +279,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e819f2bc632f285be6d7cd36e25940d45b2391dd6d9b939e79de557f7014248"
 
 [[package]]
+name = "shared-bus"
+version = "0.4.0"
+source = "git+https://github.com/Sycrosity/shared-bus?rev=e495929cb39445275058cb57d6559d5f890f98c1#e495929cb39445275058cb57d6559d5f890f98c1"
+dependencies = [
+ "embedded-hal 1.0.0",
+ "nb 1.1.0",
+]
+
+[[package]]
 name = "syn"
 version = "1.0.109"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -290,10 +301,9 @@ dependencies = [
 [[package]]
 name = "tcs3472"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7fb564b0467fca5ad375bb744ee605ec14b4db4affc450bb7061e144834dec4d"
+source = "git+https://github.com/LiamGallagher737/tcs3472-rs.git?rev=d0b4e5752e9fc8106a1ce956f54dc537ef3d33ac#d0b4e5752e9fc8106a1ce956f54dc537ef3d33ac"
 dependencies = [
- "embedded-hal 0.2.7",
+ "embedded-hal 1.0.0",
 ]
 
 [[package]]
