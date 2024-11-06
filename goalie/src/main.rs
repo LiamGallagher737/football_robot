@@ -1,10 +1,7 @@
 #![no_std]
 #![no_main]
 
-use lib::{
-    color::ColorSensor,
-    motors::{Direction, Motor},
-};
+use lib::compass::Compass;
 use panic_halt as _;
 
 #[arduino_hal::entry]
@@ -20,10 +17,10 @@ fn main() -> ! {
         50000,
     );
 
-    let mut color_sensor = ColorSensor::new(i2c).unwrap();
+    let mut compass = Compass::new(i2c).unwrap();
 
     loop {
-        let color = color_sensor.read().unwrap();
-        ufmt::uwriteln!(&mut serial, "Color: {:?}", color).unwrap();
+        let heading = compass.heading().unwrap();
+        ufmt::uwriteln!(&mut serial, "Heading: {}", heading.to_degrees() as i32).unwrap();
     }
 }
