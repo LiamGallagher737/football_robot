@@ -109,7 +109,7 @@ version = "0.1.0"
 dependencies = [
  "arduino-hal",
  "embedded-hal 1.0.0",
- "lis3mdl",
+ "lis3mdl 0.1.0 (git+https://github.com/rland93/lis3mdl.git?rev=0317b9175900292e1e51530d7bccae2e6983ed98)",
  "nb 1.1.0",
  "panic-halt",
  "proc-macro2",
@@ -188,7 +188,7 @@ dependencies = [
  "arduino-hal",
  "embedded-hal 1.0.0",
  "libm",
- "lis3mdl",
+ "lis3mdl 0.1.0 (git+https://github.com/LiamGallagher737/lis3mdl.git?rev=0b213d38e6316b8959ce78926188d5a6ca1e7f9e)",
  "tcs3472",
  "ufmt",
 ]
@@ -203,6 +203,15 @@ checksum = "8355be11b20d696c8f18f6cc018c4e372165b1fa8126cef092399c9951984ffa"
 name = "lis3mdl"
 version = "0.1.0"
 source = "git+https://github.com/rland93/lis3mdl.git?rev=0317b9175900292e1e51530d7bccae2e6983ed98#0317b9175900292e1e51530d7bccae2e6983ed98"
+dependencies = [
+ "bitflags",
+ "embedded-hal 1.0.0",
+]
+
+[[package]]
+name = "lis3mdl"
+version = "0.1.0"
+source = "git+https://github.com/LiamGallagher737/lis3mdl.git?rev=0b213d38e6316b8959ce78926188d5a6ca1e7f9e#0b213d38e6316b8959ce78926188d5a6ca1e7f9e"
 dependencies = [
  "bitflags",
  "embedded-hal 1.0.0",
