@@ -1,3 +1,5 @@
+//! This tool scans the I²C bus and prints out what it finds.
+
 #![no_std]
 #![no_main]
 

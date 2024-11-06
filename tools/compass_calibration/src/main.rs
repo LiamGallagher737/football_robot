@@ -1,3 +1,6 @@
+//! This tool calculates and prints the x and y offsets for the
+//! compass along with a scale value that we don't currently use.
+
 #![no_std]
 #![no_main]
 

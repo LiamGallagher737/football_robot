@@ -1,3 +1,5 @@
+//! This tool reads the color sensor and prints its value.
+
 #![no_std]
 #![no_main]
 
