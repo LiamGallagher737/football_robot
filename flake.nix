@@ -19,6 +19,7 @@
             (rust-bin.fromRustupToolchainFile ./rust-toolchain.toml)
             ravedude
             pkgsCross.avr.buildPackages.gcc
+            rustfmt
           ];
 
           shellHook = ''
