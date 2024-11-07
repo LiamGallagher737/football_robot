@@ -2,7 +2,6 @@
 #![no_main]
 
 use lib::{color::ColorSensor, compass::Compass};
-use panic_halt as _;
 
 const X_OFFSET: i16 = 747;
 const Y_OFFSET: i16 = -718;
@@ -22,8 +21,15 @@ fn main() -> ! {
 
     let bus = shared_bus::BusManagerSimple::new(i2c);
 
-    let mut compass = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET).unwrap();
-    let mut color_sensor = ColorSensor::new(bus.acquire_i2c()).unwrap();
+    let Ok(mut compass) = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET) else {
+        // ufmt::uwriteln!(&mut serial, "Failed to initialize compass").unwrap();
+        panic!("Failed to initialize compass");
+    };
+
+    let Ok(mut color_sensor) = ColorSensor::new(bus.acquire_i2c()) else {
+        // ufmt::uwriteln!(&mut serial, "Failed to initialize color sensor").unwrap();
+        panic!("Failed to initialize color sensor");
+    };
 
     loop {
         let heading = compass.heading().unwrap();

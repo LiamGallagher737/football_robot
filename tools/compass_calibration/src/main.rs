@@ -4,8 +4,8 @@
 #![no_std]
 #![no_main]
 
+use lib as _;
 use lis3mdl::{Address, I16xyz, Lis3mdl};
-use panic_halt as _;
 use ufmt_float::uFmt_f32;
 
 #[arduino_hal::entry]

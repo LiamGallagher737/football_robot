@@ -11,7 +11,7 @@ bench = false
 [dependencies]
 lis3mdl = { git = "https://github.com/rland93/lis3mdl.git", rev = "0317b9175900292e1e51530d7bccae2e6983ed98" }
 ufmt_float = "0.2.0"
-panic-halt.workspace = true
+lib.path = "../../lib"
 ufmt.workspace = true
 nb.workspace = true
 embedded-hal.workspace = true

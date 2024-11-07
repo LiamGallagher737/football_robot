@@ -4,7 +4,7 @@
 #![no_main]
 
 use arduino_hal::prelude::*;
-use panic_halt as _;
+use lib as _;
 
 #[arduino_hal::entry]
 fn main() -> ! {

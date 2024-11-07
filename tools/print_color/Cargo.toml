@@ -10,7 +10,6 @@ bench = false
 
 [dependencies]
 lib.path = "../../lib"
-panic-halt.workspace = true
 ufmt.workspace = true
 nb.workspace = true
 embedded-hal.workspace = true

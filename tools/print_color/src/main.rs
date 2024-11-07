@@ -4,7 +4,6 @@
 #![no_main]
 
 use lib::color::ColorSensor;
-use panic_halt as _;
 
 #[arduino_hal::entry]
 fn main() -> ! {
