@@ -1,4 +1,14 @@
+<div align="center">
+
 # Football Robot
+
+Our entry to the [Robocup Junior football competition](https://www.robocupjunior.org.nz/competition-categories/soccer-competition).
+
+</div>
+
+## Summary
+
+The purpose of this project is to have two robots play a game of football against another team of two robots. One of our robots will act as a goalie while the other one will focus on attacking.
 
 ## Prerequisites
 
