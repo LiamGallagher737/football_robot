@@ -8,6 +8,7 @@ pub struct Compass<I2C: I2c> {
 }
 
 impl<I2C: I2c> Compass<I2C> {
+    /// Set up a new instance of [`Compass`].
     pub fn new(i2c: I2C, x_offset: i16, y_offset: i16) -> Result<Self, Error> {
         let mut device = Lis3mdl::new(i2c, Address::Addr1C)?;
         let _ = device.set_temperature_sensor_enable(false);
@@ -18,6 +19,7 @@ impl<I2C: I2c> Compass<I2C> {
         })
     }
 
+    /// Get the current heading in radians.
     pub fn heading(&mut self) -> Result<f64, Error> {
         let I16xyz { x, y, .. } = self.device.get_raw_mag_axes()?;
         let calibrated_x = f64::from(x - self.x_offset);
