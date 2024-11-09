@@ -39,9 +39,9 @@ impl Color {
     }
 
     /// Get the squared distance between this [`Color`] and other one.
-    pub fn sqr_distance(&self, other: &Self) -> u16 {
-        (self.red - other.red).pow(2)
-            + (self.blue - other.blue).pow(2)
-            + (self.green - other.green).pow(2)
+    pub fn sqr_distance(&self, other: &Self) -> u32 {
+        u32::from(self.red - other.red).pow(2)
+            + u32::from(self.blue - other.blue).pow(2)
+            + u32::from(self.green - other.green).pow(2)
     }
 }
