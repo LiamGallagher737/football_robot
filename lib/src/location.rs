@@ -8,6 +8,10 @@ pub struct LocationSensor<I2C: I2c> {
 }
 
 impl<I2C: I2c<Error = E>, E> LocationSensor<I2C> {
+    /// Create a new instance of [`LocationSensor`] wrapping the given [`ColorSensor`].
+    ///
+    /// Since this takes ownership of the [`ColorSensor`], a [`LocationSensor::raw_color`] method is provided if you
+    /// need to get the raw color read from the color sensor.
     pub fn new(color_sensor: ColorSensor<I2C>, field_colors: FieldColors) -> Self {
         Self {
             color_sensor,
@@ -15,6 +19,7 @@ impl<I2C: I2c<Error = E>, E> LocationSensor<I2C> {
         }
     }
 
+    /// Get the location with the color closest to what is read from the color sensor.
     pub fn closest(&mut self) -> Result<Location, tcs3472::Error<E>> {
         let color = self.color_sensor.read()?;
         let mut closest_distance = color.sqr_distance(&self.field_colors.goal);
@@ -39,6 +44,7 @@ impl<I2C: I2c<Error = E>, E> LocationSensor<I2C> {
         Ok(closest_location)
     }
 
+    /// Get the raw color read from [`ColorSensor::read`].
     pub fn raw_color(&mut self) -> Result<Color, tcs3472::Error<E>> {
         self.color_sensor.read()
     }
