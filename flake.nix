@@ -20,6 +20,7 @@
             ravedude
             pkgsCross.avr.buildPackages.gcc
             rustfmt
+            rust-analyzer
           ];
 
           shellHook = ''
