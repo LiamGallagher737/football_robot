@@ -33,9 +33,9 @@ pub struct Color {
 }
 
 impl Color {
-    /// Get the distance between this [`Color`] and other one.
-    pub fn distance(&self, other: &Self) -> f32 {
-        libm::sqrtf(f32::from(self.sqr_distance(other)))
+    /// Create a new [`Color`] with rgb values.
+    pub const fn new(red: u16, green: u16, blue: u16) -> Self {
+        Self { red, green, blue }
     }
 
     /// Get the squared distance between this [`Color`] and other one.

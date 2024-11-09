@@ -1,10 +1,21 @@
 #![no_std]
 #![no_main]
 
-use lib::{color::ColorSensor, compass::Compass};
+use lib::{
+    color::{Color, ColorSensor},
+    compass::Compass,
+    location::{FieldColors, LocationSensor},
+};
 
 const X_OFFSET: i16 = 747;
 const Y_OFFSET: i16 = -718;
+const FIELD_COLORS: FieldColors = FieldColors {
+    goal: Color::new(0, 0, 0),
+    out: Color::new(0, 0, 0),
+    center: Color::new(0, 0, 0),
+    side_a: Color::new(0, 0, 0),
+    side_b: Color::new(0, 0, 0),
+};
 
 #[arduino_hal::entry]
 fn main() -> ! {
@@ -25,17 +36,21 @@ fn main() -> ! {
         panic!("Failed to initialize compass");
     };
 
-    let Ok(mut color_sensor) = ColorSensor::new(bus.acquire_i2c()) else {
+    let Ok(color_sensor) = ColorSensor::new(bus.acquire_i2c()) else {
         panic!("Failed to initialize color sensor");
     };
 
+    let mut location_sensor = LocationSensor::new(color_sensor, FIELD_COLORS);
+
     loop {
         let heading = compass.heading().unwrap();
-        let color = color_sensor.read().unwrap();
+        let location = location_sensor.closest().unwrap();
+        let color = location_sensor.raw_color().unwrap();
         ufmt::uwriteln!(
             &mut serial,
-            "Heading: {}    Color: {:?}",
+            "Heading: {}    Location: {:?}    Color: {:?}",
             heading.to_degrees() as i32,
+            location,
             color
         )
         .unwrap();
