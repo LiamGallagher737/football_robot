@@ -1,6 +1,6 @@
 use embedded_hal::i2c::I2c;
 use tcs3472::{AllChannelMeasurement, Error, Tcs3472};
-use ufmt::derive::uDebug;
+use ufmt::{derive::uDebug, uDisplay};
 
 pub struct ColorSensor<I2C: I2c> {
     sensor: Tcs3472<I2C>,
@@ -43,5 +43,18 @@ impl Color {
         u32::from(self.red - other.red).pow(2)
             + u32::from(self.blue - other.blue).pow(2)
             + u32::from(self.green - other.green).pow(2)
+    }
+}
+
+impl uDisplay for Color {
+    fn fmt<W>(&self, f: &mut ufmt::Formatter<'_, W>) -> Result<(), W::Error>
+    where
+        W: ufmt::uWrite + ?Sized,
+    {
+        f.debug_tuple("RGB")?
+            .field(&self.red)?
+            .field(&self.green)?
+            .field(&self.blue)?
+            .finish()
     }
 }

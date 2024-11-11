@@ -48,7 +48,7 @@ fn main() -> ! {
         let color = location_sensor.raw_color().unwrap();
         ufmt::uwriteln!(
             &mut serial,
-            "Heading: {}    Location: {:?}    Color: {:?}",
+            "Heading: {}    Location: {:?}    Color: {}",
             heading.to_degrees() as i32,
             location,
             color
