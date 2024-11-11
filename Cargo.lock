@@ -462,7 +462,7 @@ dependencies = [
 [[package]]
 name = "tcs3472"
 version = "0.2.0"
-source = "git+https://github.com/LiamGallagher737/tcs3472-rs.git?rev=d0b4e5752e9fc8106a1ce956f54dc537ef3d33ac#d0b4e5752e9fc8106a1ce956f54dc537ef3d33ac"
+source = "git+https://github.com/LiamGallagher737/tcs3472-rs.git?rev=f8c99217a3a0ce6405255656d8b41fcad18ddee8#f8c99217a3a0ce6405255656d8b41fcad18ddee8"
 dependencies = [
  "embedded-hal 1.0.0",
 ]
