@@ -4,7 +4,7 @@
 #![no_std]
 #![no_main]
 
-use lib as _;
+use lib::display::Display;
 use lis3mdl::{Address, I16xyz, Lis3mdl};
 use ufmt_float::uFmt_f32;
 
@@ -21,7 +21,10 @@ fn main() -> ! {
         50000,
     );
 
-    let mut lis3mdl = Lis3mdl::new(i2c, Address::Addr1C).unwrap();
+    let bus = shared_bus::BusManagerSimple::new(i2c);
+
+    let mut display = Display::new(bus.acquire_i2c());
+    let mut lis3mdl = Lis3mdl::new(bus.acquire_i2c(), Address::Addr1C).unwrap();
     let _ = lis3mdl.set_temperature_sensor_enable(false);
 
     let mut x_min = i16::MAX;
@@ -57,9 +60,22 @@ fn main() -> ! {
 
         ufmt::uwriteln!(
             &mut serial,
-            "X-OFFSET: {}, Y-OFFSET: {}, X-SCALE: {}, Y-SCALE: {}"
-            x_offset, y_offset, uFmt_f32::Five(x_scale), uFmt_f32::Five(y_scale)
+            "X-OFFSET: {}, Y-OFFSET: {}, X-SCALE: {}, Y-SCALE: {}",
+            x_offset,
+            y_offset,
+            uFmt_f32::Five(x_scale),
+            uFmt_f32::Five(y_scale)
         )
         .unwrap();
+
+        if let Ok(display) = &mut display {
+            ufmt::uwriteln!(
+                display,
+                "\n\n\nX-OFFSET: {}\nY-OFFSET: {}\n\n\n",
+                x_offset,
+                y_offset,
+            )
+            .unwrap();
+        }
     }
 }

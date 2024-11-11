@@ -130,6 +130,7 @@ dependencies = [
  "lis3mdl 0.1.0 (git+https://github.com/rland93/lis3mdl.git?rev=0317b9175900292e1e51530d7bccae2e6983ed98)",
  "nb 1.1.0",
  "proc-macro2",
+ "shared-bus",
  "ufmt",
  "ufmt_float",
 ]
