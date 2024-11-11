@@ -6,9 +6,9 @@ pub struct ColorSensor<I2C: I2c> {
     sensor: Tcs3472<I2C>,
 }
 
-impl<I2C: I2c<Error = E>, E> ColorSensor<I2C> {
+impl<I2C: I2c> ColorSensor<I2C> {
     /// Setup a new instance of [`ColorSensor`].
-    pub fn new(i2c: I2C) -> Result<Self, Error<E>> {
+    pub fn new(i2c: I2C) -> Result<Self, Error<I2C::Error>> {
         let mut sensor = Tcs3472::new(i2c);
         sensor.enable()?;
         sensor.enable_rgbc()?;
@@ -17,7 +17,7 @@ impl<I2C: I2c<Error = E>, E> ColorSensor<I2C> {
     }
 
     /// Read the [`Color`] from the sensor.
-    pub fn read(&mut self) -> Result<Color, Error<E>> {
+    pub fn read(&mut self) -> Result<Color, Error<I2C::Error>> {
         let AllChannelMeasurement {
             red, green, blue, ..
         } = self.sensor.read_all_channels()?;
