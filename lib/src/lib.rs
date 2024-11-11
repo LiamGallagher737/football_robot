@@ -3,6 +3,7 @@
 
 pub mod color;
 pub mod compass;
+pub mod display;
 pub mod location;
 pub mod motors;
 pub mod panic;

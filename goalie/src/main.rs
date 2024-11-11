@@ -4,6 +4,7 @@
 use lib::{
     color::{Color, ColorSensor},
     compass::Compass,
+    display::Display,
     location::{FieldColors, LocationSensor},
 };
 
@@ -21,7 +22,7 @@ const FIELD_COLORS: FieldColors = FieldColors {
 fn main() -> ! {
     let dp = arduino_hal::Peripherals::take().unwrap();
     let pins = arduino_hal::pins!(dp);
-    let mut serial = arduino_hal::default_serial!(dp, pins, 57600);
+    // let mut serial = arduino_hal::default_serial!(dp, pins, 57600);
 
     let i2c = arduino_hal::I2c::new(
         dp.TWI,
@@ -31,6 +32,10 @@ fn main() -> ! {
     );
 
     let bus = shared_bus::BusManagerSimple::new(i2c);
+
+    let Ok(mut display) = Display::new(bus.acquire_i2c()) else {
+        panic!("Failed to initialize display");
+    };
 
     let Ok(mut compass) = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET) else {
         panic!("Failed to initialize compass");
@@ -45,13 +50,11 @@ fn main() -> ! {
     loop {
         let heading = compass.heading().unwrap();
         let location = location_sensor.closest().unwrap();
-        let color = location_sensor.raw_color().unwrap();
         ufmt::uwriteln!(
-            &mut serial,
-            "Heading: {}    Location: {:?}    Color: {}",
+            &mut display,
+            "Heading: {}\nLocation: {:?}",
             heading.to_degrees() as i32,
             location,
-            color
         )
         .unwrap();
     }

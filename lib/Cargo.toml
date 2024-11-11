@@ -10,6 +10,7 @@ bench = false
 [dependencies]
 libm = "0.2.0"
 avr-device = "0.5.0"
+ssd1306 = "0.9.0"
 tcs3472 = { git = "https://github.com/LiamGallagher737/tcs3472-rs.git", rev = "d0b4e5752e9fc8106a1ce956f54dc537ef3d33ac" }
 lis3mdl = { git = "https://github.com/LiamGallagher737/lis3mdl.git", rev = "0b213d38e6316b8959ce78926188d5a6ca1e7f9e" }
 embedded-hal.workspace = true
