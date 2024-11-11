@@ -1,14 +1,13 @@
-use arduino_hal::prelude::*;
 use core::panic::PanicInfo;
 
-use crate::display::Display;
+use crate::{display::Display, terminal::Terminal};
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     avr_device::interrupt::disable();
     let dp = unsafe { arduino_hal::Peripherals::steal() };
     let pins = arduino_hal::pins!(dp);
-    let mut serial = arduino_hal::default_serial!(dp, pins, 57600);
+    let serial = arduino_hal::default_serial!(dp, pins, 57600);
 
     let i2c = arduino_hal::I2c::new(
         dp.TWI,
@@ -17,33 +16,25 @@ fn panic(info: &PanicInfo) -> ! {
         50000,
     );
 
-    let mut display = Display::new(i2c);
-
-    ufmt::uwriteln!(&mut serial, "Firmware panic!").unwrap_infallible();
-    if let Ok(display) = &mut display {
-        let _ = ufmt::uwriteln!(display, "Firmware panic!");
+    let mut terminal = Terminal::new().with_usb(serial);
+    if let Ok(display) = Display::new(i2c) {
+        terminal = terminal.with_display(display);
     }
 
+    let _ = ufmt::uwriteln!(&mut terminal, "Firmware panic!");
+
     if let Some(loc) = info.location() {
-        ufmt::uwriteln!(
-            &mut serial,
+        let _ = ufmt::uwriteln!(
+            &mut terminal,
             "At {}:{}:{}",
             loc.file(),
             loc.line(),
             loc.column(),
-        )
-        .unwrap_infallible();
-
-        if let Ok(display) = &mut display {
-            let _ = ufmt::uwriteln!(display, "At {}:{}:{}", loc.file(), loc.line(), loc.column());
-        }
+        );
     }
 
     if let Some(Some(message)) = info.message().map(|m| m.as_str()) {
-        ufmt::uwriteln!(&mut serial, "Message: {}", message).unwrap_infallible();
-        if let Ok(display) = &mut display {
-            let _ = ufmt::uwriteln!(display, "Message: {}", message);
-        }
+        let _ = ufmt::uwriteln!(&mut terminal, "Message: {}", message);
     }
 
     let mut led = pins.d13.into_output();
