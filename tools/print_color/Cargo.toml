@@ -11,7 +11,6 @@ bench = false
 [dependencies]
 lib.path = "../../lib"
 ufmt.workspace = true
-nb.workspace = true
 embedded-hal.workspace = true
 arduino-hal.workspace = true
 shared-bus.workspace = true

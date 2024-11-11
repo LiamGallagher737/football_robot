@@ -13,7 +13,6 @@ lis3mdl = { git = "https://github.com/rland93/lis3mdl.git", rev = "0317b91759002
 ufmt_float = "0.2.0"
 lib.path = "../../lib"
 ufmt.workspace = true
-nb.workspace = true
 embedded-hal.workspace = true
 arduino-hal.workspace = true
 shared-bus.workspace = true
