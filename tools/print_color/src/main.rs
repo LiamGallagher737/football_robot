@@ -3,7 +3,7 @@
 #![no_std]
 #![no_main]
 
-use lib::color::ColorSensor;
+use lib::{color::ColorSensor, display::Display};
 
 #[arduino_hal::entry]
 fn main() -> ! {
@@ -18,10 +18,23 @@ fn main() -> ! {
         50000,
     );
 
-    let mut color_sensor = ColorSensor::new(i2c).unwrap();
+    let bus = shared_bus::BusManagerSimple::new(i2c);
+
+    let mut color_sensor = ColorSensor::new(bus.acquire_i2c()).unwrap();
+    let mut display = Display::new(bus.acquire_i2c());
 
     loop {
         let color = color_sensor.read().unwrap();
-        ufmt::uwriteln!(&mut serial, "Color: {:?}", color).unwrap();
+        ufmt::uwriteln!(&mut serial, "Color: {}", color).unwrap();
+        if let Ok(display) = &mut display {
+            ufmt::uwriteln!(
+                display,
+                "Red: {}\nGreen: {}\nBlue: {}\n\n\n\n\n",
+                color.red,
+                color.green,
+                color.blue
+            )
+            .unwrap();
+        }
     }
 }

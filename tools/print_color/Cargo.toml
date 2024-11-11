@@ -14,6 +14,7 @@ ufmt.workspace = true
 nb.workspace = true
 embedded-hal.workspace = true
 arduino-hal.workspace = true
+shared-bus.workspace = true
 
 # The latest releases of `proc-macro2` do not support the rust toolchain that
 # we use.  Thus, we must fix this dependency to an older version where our

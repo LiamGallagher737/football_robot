@@ -55,7 +55,7 @@ fn main() -> ! {
         let location = location_sensor.closest().unwrap();
         ufmt::uwriteln!(
             &mut terminal,
-            "Heading: {}\nLocation: {:?}",
+            "\n\n\nHeading: {}\nLocation: {:?}\n\n\n",
             heading.to_degrees() as i32,
             location,
         )

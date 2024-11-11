@@ -27,9 +27,9 @@ impl<I2C: I2c<Error = E>, E> ColorSensor<I2C> {
 
 #[derive(uDebug)]
 pub struct Color {
-    red: u16,
-    green: u16,
-    blue: u16,
+    pub red: u16,
+    pub green: u16,
+    pub blue: u16,
 }
 
 impl Color {
