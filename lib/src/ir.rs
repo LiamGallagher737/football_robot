@@ -35,7 +35,7 @@ impl IrSensors {
     }
 
     pub fn read_single(&mut self, ir: IrSensor) -> u16 {
-        match ir {
+        let raw_value = match ir {
             IrSensor::IR1 => self.ir1.analog_read(&mut self.adc),
             IrSensor::IR2 => self.ir2.analog_read(&mut self.adc),
             IrSensor::IR3 => self.ir3.analog_read(&mut self.adc),
@@ -44,7 +44,8 @@ impl IrSensors {
             IrSensor::IR6 => self.ir6.analog_read(&mut self.adc),
             IrSensor::IR7 => self.ir7.analog_read(&mut self.adc),
             IrSensor::IR8 => self.ir8.analog_read(&mut self.adc),
-        }
+        };
+        raw_value - self.offsets[ir as usize]
     }
 }
 
