@@ -15,7 +15,7 @@ fn main() -> ! {
     let mut max = [u16::MIN; 8];
 
     loop {
-        let readings = ir_sensors.read();
+        let readings = ir_sensors.read_raw();
         for n in 0..8 {
             if min[n] > readings[n] {
                 min[n] = readings[n];
