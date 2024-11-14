@@ -21,6 +21,7 @@ pub struct IrSensors {
 }
 
 impl IrSensors {
+    /// Read the calibrated values of each IR sensor.
     pub fn read(&mut self) -> [u16; 8] {
         [
             self.read_single(IrSensor::IR1),
@@ -34,6 +35,7 @@ impl IrSensors {
         ]
     }
 
+    /// Read the raw values of each IR sensor.
     pub fn read_raw(&mut self) -> [u16; 8] {
         [
             self.read_single_raw(IrSensor::IR1),
@@ -47,11 +49,13 @@ impl IrSensors {
         ]
     }
 
+    /// Read the calibrated value of a single IR sensor.
     pub fn read_single(&mut self, ir: IrSensor) -> u16 {
         let raw_value = self.read_single_raw(ir);
         raw_value - self.offsets[ir as usize]
     }
 
+    /// Read the raw value of a single IR sensor.
     pub fn read_single_raw(&mut self, ir: IrSensor) -> u16 {
         match ir {
             IrSensor::IR1 => self.ir1.analog_read(&mut self.adc),
