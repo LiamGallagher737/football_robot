@@ -6,7 +6,7 @@ members = [
     "lib",
     "tools/i2c_detect",
     "tools/print_color",
-    "tools/compass_calibration",
+    "tools/compass_calibration", "tools/ir_calibrate",
 ]
 
 [workspace.dependencies]
