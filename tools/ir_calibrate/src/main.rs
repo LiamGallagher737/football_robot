@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use lib::{ir::IrSensor, ir_sensors};
+use lib::ir_sensors;
 
 #[arduino_hal::entry]
 fn main() -> ! {
@@ -11,41 +11,35 @@ fn main() -> ! {
 
     let mut ir_sensors = ir_sensors!(dp, pins, [0; 8]);
 
-    let mut left_min = u16::MAX;
-    let mut left_max = u16::MIN;
-    let mut right_min = u16::MAX;
-    let mut right_max = u16::MIN;
+    let mut min = [u16::MAX; 8];
+    let mut max = [u16::MIN; 8];
 
     loop {
-        let left = ir_sensors.read_single(IrSensor::IR3);
-        let right = ir_sensors.read_single(IrSensor::IR7);
+        let readings = ir_sensors.read();
+        for n in 0..8 {
+            if min[n] > readings[n] {
+                min[n] = readings[n];
+            }
 
-        if left_min > left {
-            left_min = left;
+            if max[n] < readings[n] {
+                max[n] = readings[n];
+            }
         }
 
-        if left_max < left {
-            left_max = left;
+        let mut min_offset = u16::MAX;
+        let mut offsets = [0; 8];
+        for n in 0..8 {
+            offsets[n] = (min[n] + max[n]) / 2;
+
+            if offsets[n] < min_offset {
+                min_offset = offsets[n];
+            }
         }
 
-        if right_min > right {
-            right_min = right;
+        for offset in offsets {
+            ufmt::uwrite!(&mut serial, "{}, ", offset - min_offset).unwrap();
         }
-
-        if right_max < right {
-            right_max = right;
-        }
-
-        let left_offset = (left_min + left_max) / 2;
-        let right_offset = (right_min + right_max) / 2;
-
-        ufmt::uwriteln!(
-            &mut serial,
-            "Left Offset: {}\tRight Offset: {}",
-            left_offset,
-            right_offset
-        )
-        .unwrap();
+        ufmt::uwriteln!(&mut serial, "").unwrap();
 
         arduino_hal::delay_ms(100);
     }
