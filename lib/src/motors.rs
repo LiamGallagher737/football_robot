@@ -23,6 +23,12 @@ pub enum Direction {
     Back,
 }
 
+#[derive(uDebug, Clone, Copy)]
+pub enum Turn {
+    Clockwise,
+    Anticlockwise,
+}
+
 pub struct Motors {
     // The pin types can be found by hovering on `pins.d**`.
     front_left: MotorPins<Timer1Pwm, PB5, PA4>,
@@ -78,6 +84,24 @@ impl Motors {
         motors.dribbler.en.enable();
 
         motors
+    }
+
+    pub fn rotate(&mut self, turn: Turn, speed: u8) {
+        for motor in [Motor::FrontLeft, Motor::FrontRight, Motor::Rear] {
+            self.set_speed(motor, speed);
+        }
+        match turn {
+            Turn::Clockwise => {
+                self.set_direction(Motor::FrontLeft, Direction::Forward);
+                self.set_direction(Motor::FrontRight, Direction::Back);
+                self.set_direction(Motor::Rear, Direction::Back);
+            }
+            Turn::Anticlockwise => {
+                self.set_direction(Motor::FrontLeft, Direction::Back);
+                self.set_direction(Motor::FrontRight, Direction::Forward);
+                self.set_direction(Motor::Rear, Direction::Forward);
+            }
+        };
     }
 
     /// Set the speed of a single motor.

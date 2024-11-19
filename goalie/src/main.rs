@@ -6,6 +6,7 @@ use lib::{
     compass::Compass,
     display::Display,
     location::{FieldColors, LocationSensor},
+    motors::Turn,
     terminal::Terminal,
 };
 
@@ -38,9 +39,9 @@ fn main() -> ! {
         panic!("Failed to initialize display");
     };
 
-    let mut terminal = Terminal::new().with_usb(serial).with_display(display);
+    let mut _terminal = Terminal::new().with_usb(serial).with_display(display);
 
-    let Ok(mut compass) = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET) else {
+    let Ok(mut _compass) = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET) else {
         panic!("Failed to initialize compass");
     };
 
@@ -48,17 +49,10 @@ fn main() -> ! {
         panic!("Failed to initialize color sensor");
     };
 
-    let mut location_sensor = LocationSensor::new(color_sensor, FIELD_COLORS);
+    let mut _location_sensor = LocationSensor::new(color_sensor, FIELD_COLORS);
 
-    loop {
-        let heading = compass.heading().unwrap();
-        let location = location_sensor.closest().unwrap();
-        ufmt::uwriteln!(
-            &mut terminal,
-            "\n\n\nHeading: {}\nLocation: {:?}\n\n\n",
-            heading.to_degrees() as i32,
-            location,
-        )
-        .unwrap();
-    }
+    let mut motors = lib::motors!(dp, pins);
+    motors.rotate(Turn::Anticlockwise, 50);
+
+    loop {}
 }
