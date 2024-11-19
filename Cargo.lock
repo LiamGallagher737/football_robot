@@ -254,6 +254,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ir_data_collect"
+version = "0.1.0"
+dependencies = [
+ "arduino-hal",
+ "embedded-hal 1.0.0",
+ "lib",
+ "proc-macro2",
+ "ufmt",
+]
+
+[[package]]
 name = "lib"
 version = "0.1.0"
 dependencies = [
