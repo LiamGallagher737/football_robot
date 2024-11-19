@@ -23,7 +23,7 @@ fn main() -> ! {
         panic!("Failed to initialize compass");
     };
 
-    let mut motors = motors!(dp, pins);
+    let mut _motors = motors!(dp, pins);
 
     let mut ir_sensors = ir_sensors!(dp, pins, [55, 81, 0, 59, 93, 85, 129, 103]);
 
