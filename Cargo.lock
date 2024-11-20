@@ -276,6 +276,7 @@ dependencies = [
  "ssd1306",
  "tcs3472",
  "ufmt",
+ "ufmt_float",
 ]
 
 [[package]]

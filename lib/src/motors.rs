@@ -7,7 +7,7 @@ use arduino_hal::{
     },
     simple_pwm::{IntoPwmPin, Prescaler, Timer1Pwm, Timer2Pwm},
 };
-use ufmt::derive::uDebug;
+use ufmt::{derive::uDebug, uWrite};
 
 #[derive(uDebug, Clone, Copy)]
 pub enum Motor {
@@ -86,22 +86,54 @@ impl Motors {
         motors
     }
 
+    /// Move the entire robot using the motors.
+    pub fn translate(&mut self, heading: f64, speed: u8) {
+        // Turn the heading in to its X and Y parts.
+        let ax = libm::cos(heading);
+        let ay = libm::sin(heading);
+
+        // Calculate the amount each motor contributes.
+        let fl_amount = ax * 0.58 + ay * -0.33;
+        let fr_amount = ax * -0.58 + ay * -0.33;
+        let rear_amount = ay * 0.67;
+
+        // Find the max contribute amount.
+        let mut max_amount = libm::fabs(fl_amount);
+        for a in [libm::fabs(fr_amount), libm::fabs(rear_amount)] {
+            if max_amount < a {
+                max_amount = a;
+            }
+        }
+
+        // Get a multiplier to normalize the contribution
+        // amounts so the highest value is 1.0.
+        let multiplier = 1.0 / max_amount;
+
+        // Calculate the speed by taking the product of absolute of the contribute
+        // amount, the normalizing multiplier and the provided speed.
+        let fl_value = fl_amount * multiplier * speed as f64;
+        let fr_value = fr_amount * multiplier * speed as f64;
+        let rear_value = rear_amount * multiplier * speed as f64;
+
+        self.set_motor(Motor::FrontLeft, fl_value as i16);
+        self.set_motor(Motor::FrontRight, fr_value as i16);
+        self.set_motor(Motor::Rear, rear_value as i16);
+    }
+
+    /// Rotate the entire robot using the motors.
     pub fn rotate(&mut self, turn: Turn, speed: u8) {
         for motor in [Motor::FrontLeft, Motor::FrontRight, Motor::Rear] {
             self.set_speed(motor, speed);
         }
-        match turn {
-            Turn::Clockwise => {
-                self.set_direction(Motor::FrontLeft, Direction::Forward);
-                self.set_direction(Motor::FrontRight, Direction::Back);
-                self.set_direction(Motor::Rear, Direction::Back);
-            }
-            Turn::Anticlockwise => {
-                self.set_direction(Motor::FrontLeft, Direction::Back);
-                self.set_direction(Motor::FrontRight, Direction::Forward);
-                self.set_direction(Motor::Rear, Direction::Forward);
-            }
+
+        let direction = match turn {
+            Turn::Clockwise => Direction::Forward,
+            Turn::Anticlockwise => Direction::Back,
         };
+
+        self.set_direction(Motor::FrontLeft, direction);
+        self.set_direction(Motor::FrontRight, direction);
+        self.set_direction(Motor::Rear, direction);
     }
 
     /// Set the speed of a single motor.
@@ -129,6 +161,23 @@ impl Motors {
             (Motor::Dribbler, Direction::Forward) => self.dribbler.ph.set_high(),
             (Motor::Dribbler, Direction::Back) => self.dribbler.ph.set_low(),
         }
+    }
+
+    /// Set the motors speed and direction with a single value.
+    ///
+    /// NOTE: The values absolute must be less than or equal to 255.
+    fn set_motor(&mut self, motor: Motor, value: i16) {
+        assert!(value.abs() <= 255, "Max motor speed is 255");
+
+        self.set_speed(motor, value.abs() as u8);
+        self.set_direction(
+            motor,
+            if value.is_positive() {
+                Direction::Forward
+            } else {
+                Direction::Back
+            },
+        );
     }
 }
 

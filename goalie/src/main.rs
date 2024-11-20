@@ -6,8 +6,6 @@ use lib::{
     compass::Compass,
     display::Display,
     location::{FieldColors, LocationSensor},
-    motors::Turn,
-    terminal::Terminal,
 };
 
 const X_OFFSET: i16 = 747;
@@ -24,7 +22,7 @@ const FIELD_COLORS: FieldColors = FieldColors {
 fn main() -> ! {
     let dp = arduino_hal::Peripherals::take().unwrap();
     let pins = arduino_hal::pins!(dp);
-    let serial = arduino_hal::default_serial!(dp, pins, 57600);
+    let _serial = arduino_hal::default_serial!(dp, pins, 57600);
 
     let i2c = arduino_hal::I2c::new(
         dp.TWI,
@@ -35,11 +33,9 @@ fn main() -> ! {
 
     let bus = shared_bus::BusManagerSimple::new(i2c);
 
-    let Ok(display) = Display::new(bus.acquire_i2c()) else {
+    let Ok(_display) = Display::new(bus.acquire_i2c()) else {
         panic!("Failed to initialize display");
     };
-
-    let mut _terminal = Terminal::new().with_usb(serial).with_display(display);
 
     let Ok(mut _compass) = Compass::new(bus.acquire_i2c(), X_OFFSET, Y_OFFSET) else {
         panic!("Failed to initialize compass");
@@ -52,7 +48,8 @@ fn main() -> ! {
     let mut _location_sensor = LocationSensor::new(color_sensor, FIELD_COLORS);
 
     let mut motors = lib::motors!(dp, pins);
-    motors.rotate(Turn::Anticlockwise, 50);
+    motors.translate(core::f64::consts::PI / 2.0, 50);
+    // motors.rotate(lib::motors::Turn::Clockwise, 50);
 
     loop {}
 }
