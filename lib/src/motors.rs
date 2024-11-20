@@ -7,7 +7,7 @@ use arduino_hal::{
     },
     simple_pwm::{IntoPwmPin, Prescaler, Timer1Pwm, Timer2Pwm},
 };
-use ufmt::{derive::uDebug, uWrite};
+use ufmt::derive::uDebug;
 
 #[derive(uDebug, Clone, Copy)]
 pub enum Motor {
