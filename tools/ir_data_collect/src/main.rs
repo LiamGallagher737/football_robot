@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use lib::{compass::Compass, ir::IrSensor, ir_sensors, motors};
+use lib::{compass::Compass, ir::IrSensor};
 
 const X_OFFSET: i16 = 126;
 const Y_OFFSET: i16 = -646;
@@ -23,9 +23,9 @@ fn main() -> ! {
         panic!("Failed to initialize compass");
     };
 
-    let mut _motors = motors!(dp, pins);
+    let mut _motors = lib::motors::motors!(dp, pins);
 
-    let mut ir_sensors = ir_sensors!(dp, pins, [55, 81, 0, 59, 93, 85, 129, 103]);
+    let mut ir_sensors = lib::ir::ir_sensors!(dp, pins, [55, 81, 0, 59, 93, 85, 129, 103]);
 
     let zero_heading = compass.heading().unwrap().degrees() + 180.0;
 

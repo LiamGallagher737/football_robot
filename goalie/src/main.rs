@@ -52,7 +52,7 @@ fn main() -> ! {
 
     let mut location_sensor = LocationSensor::new(color_sensor, FIELD_COLORS);
 
-    let mut motors = lib::motors!(dp, pins);
+    let mut motors = lib::motors::motors!(dp, pins);
 
     let initial_heading = compass.heading().unwrap();
 

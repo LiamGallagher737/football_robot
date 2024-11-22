@@ -181,12 +181,9 @@ impl Motors {
     }
 }
 
-#[macro_export]
-macro_rules! motors {
-    ($dp:expr, $pins:expr) => {
-        $crate::motors::Motors::new(
-            $dp.TC1, $dp.TC2, $pins.d10, $pins.d11, $pins.d12, $pins.d13, $pins.d22, $pins.d24,
-            $pins.d26, $pins.d28,
-        )
-    };
+pub macro motors($dp:expr, $pins:expr) {
+    $crate::motors::Motors::new(
+        $dp.TC1, $dp.TC2, $pins.d10, $pins.d11, $pins.d12, $pins.d13, $pins.d22, $pins.d24,
+        $pins.d26, $pins.d28,
+    )
 }

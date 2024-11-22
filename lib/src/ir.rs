@@ -82,21 +82,18 @@ pub enum IrSensor {
     IR8,
 }
 
-#[macro_export]
-macro_rules! ir_sensors {
-    ($dp:expr, $pins:expr, $offsets:expr) => {{
-        let mut adc = arduino_hal::Adc::new($dp.ADC, Default::default());
-        $crate::ir::IrSensors {
-            ir1: $pins.a0.into_analog_input(&mut adc),
-            ir2: $pins.a1.into_analog_input(&mut adc),
-            ir3: $pins.a2.into_analog_input(&mut adc),
-            ir4: $pins.a3.into_analog_input(&mut adc),
-            ir5: $pins.a4.into_analog_input(&mut adc),
-            ir6: $pins.a5.into_analog_input(&mut adc),
-            ir7: $pins.a6.into_analog_input(&mut adc),
-            ir8: $pins.a7.into_analog_input(&mut adc),
-            offsets: $offsets,
-            adc,
-        }
-    }};
-}
+pub macro ir_sensors($dp:expr, $pins:expr, $offsets:expr) {{
+    let mut adc = arduino_hal::Adc::new($dp.ADC, Default::default());
+    $crate::ir::IrSensors {
+        ir1: $pins.a0.into_analog_input(&mut adc),
+        ir2: $pins.a1.into_analog_input(&mut adc),
+        ir3: $pins.a2.into_analog_input(&mut adc),
+        ir4: $pins.a3.into_analog_input(&mut adc),
+        ir5: $pins.a4.into_analog_input(&mut adc),
+        ir6: $pins.a5.into_analog_input(&mut adc),
+        ir7: $pins.a6.into_analog_input(&mut adc),
+        ir8: $pins.a7.into_analog_input(&mut adc),
+        offsets: $offsets,
+        adc,
+    }
+}}
