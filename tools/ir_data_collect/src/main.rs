@@ -27,10 +27,10 @@ fn main() -> ! {
 
     let mut ir_sensors = ir_sensors!(dp, pins, [55, 81, 0, 59, 93, 85, 129, 103]);
 
-    let zero_heading = compass.heading().unwrap().to_degrees() + 180.0;
+    let zero_heading = compass.heading().unwrap().degrees() + 180.0;
 
     loop {
-        let heading = compass.heading().unwrap().to_degrees();
+        let heading = compass.heading().unwrap().degrees();
         let readings = [
             ir_sensors.read_single(IrSensor::IR3),
             ir_sensors.read_single(IrSensor::IR7),

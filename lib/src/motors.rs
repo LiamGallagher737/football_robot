@@ -7,6 +7,7 @@ use arduino_hal::{
     },
     simple_pwm::{IntoPwmPin, Prescaler, Timer1Pwm, Timer2Pwm},
 };
+use radian::Angle;
 use ufmt::derive::uDebug;
 
 #[derive(uDebug, Clone, Copy)]
@@ -87,10 +88,9 @@ impl Motors {
     }
 
     /// Move the entire robot using the motors.
-    pub fn translate(&mut self, heading: f64, speed: u8) {
+    pub fn translate(&mut self, heading: Angle, speed: u8) {
         // Turn the heading in to its X and Y parts.
-        let ax = libm::cos(heading);
-        let ay = libm::sin(heading);
+        let (ax, ay) = heading.to_unit_vector();
 
         // Calculate the amount each motor contributes.
         let fl_amount = ax * 0.58 + ay * -0.33;

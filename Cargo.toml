@@ -12,8 +12,13 @@ members = [
 ]
 
 [workspace.dependencies]
+libm = "0.2.0"
 ufmt = "0.2.0"
 embedded-hal = "1.0"
+radian = { version = "0.1.1", default-features = false, features = [
+    "libm",
+    "ufmt",
+] }
 shared-bus = { git = "https://github.com/Sycrosity/shared-bus", rev = "e495929cb39445275058cb57d6559d5f890f98c1" }
 
 [workspace.dependencies.arduino-hal]

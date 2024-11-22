@@ -9,7 +9,10 @@ test = false
 bench = false
 
 [dependencies]
+ufmt_float = "0.2.0"
 lib.path = "../lib"
+libm.workspace = true
+radian.workspace = true
 ufmt.workspace = true
 embedded-hal.workspace = true
 arduino-hal.workspace = true

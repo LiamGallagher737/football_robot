@@ -1,5 +1,6 @@
 use embedded_hal::i2c::I2c;
 use lis3mdl::{Address, Error, I16xyz, Lis3mdl};
+use radian::Angle;
 
 pub struct Compass<I2C: I2c> {
     device: Lis3mdl<I2C>,
@@ -19,12 +20,12 @@ impl<I2C: I2c> Compass<I2C> {
         })
     }
 
-    /// Get the current heading in radians.
-    pub fn heading(&mut self) -> Result<f64, Error> {
+    /// Get the current heading.
+    pub fn heading(&mut self) -> Result<Angle, Error> {
         let I16xyz { x, y, .. } = self.device.get_raw_mag_axes()?;
         let calibrated_x = f64::from(x - self.x_offset);
         let calibrated_y = f64::from(y - self.y_offset);
 
-        Ok(libm::atan2(calibrated_y, calibrated_x))
+        Ok(Angle::from_unit_vector(calibrated_x, calibrated_y))
     }
 }

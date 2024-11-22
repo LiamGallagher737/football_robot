@@ -226,9 +226,12 @@ dependencies = [
  "arduino-hal",
  "embedded-hal 1.0.0",
  "lib",
+ "libm",
  "proc-macro2",
+ "radian",
  "shared-bus",
  "ufmt",
+ "ufmt_float",
 ]
 
 [[package]]
@@ -273,6 +276,7 @@ dependencies = [
  "embedded-hal 1.0.0",
  "libm",
  "lis3mdl 0.1.0 (git+https://github.com/LiamGallagher737/lis3mdl.git?rev=0b213d38e6316b8959ce78926188d5a6ca1e7f9e)",
+ "radian",
  "ssd1306",
  "tcs3472",
  "ufmt",
@@ -423,6 +427,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7"
 dependencies = [
  "proc-macro2",
+]
+
+[[package]]
+name = "radian"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7ff1e8460bfb1b3b4543fbd976631532821f82ba24e372b84e4390d0e5074874"
+dependencies = [
+ "libm",
+ "ufmt",
+ "ufmt_float",
 ]
 
 [[package]]
