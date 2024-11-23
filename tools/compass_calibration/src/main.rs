@@ -6,7 +6,6 @@
 
 use lib::display::Display;
 use lis3mdl::{Address, I16xyz, Lis3mdl};
-use ufmt_float::uFmt_f32;
 
 #[arduino_hal::entry]
 fn main() -> ! {
@@ -55,16 +54,16 @@ fn main() -> ! {
         let x_offset = (x_min + x_max) / 2;
         let y_offset = (y_min + y_max) / 2;
 
-        let x_scale = 2.0 / (x_max - x_min) as f32;
-        let y_scale = 2.0 / (y_max - y_min) as f32;
+        let x_scale = 2.0 / (x_max - x_min) as f64;
+        let y_scale = 2.0 / (y_max - y_min) as f64;
 
         ufmt::uwriteln!(
             &mut serial,
             "X-OFFSET: {}, Y-OFFSET: {}, X-SCALE: {}, Y-SCALE: {}",
             x_offset,
             y_offset,
-            uFmt_f32::Five(x_scale),
-            uFmt_f32::Five(y_scale)
+            ufloat::Uf64(x_scale, 4),
+            ufloat::Uf64(y_scale, 4)
         )
         .unwrap();
 

@@ -14,8 +14,9 @@ members = [
 [workspace.dependencies]
 libm = "0.2.0"
 ufmt = "0.2.0"
+ufloat = "0.1.0"
 embedded-hal = "1.0"
-radian = { version = "0.1.1", default-features = false, features = [
+radian = { version = "0.1.2", default-features = false, features = [
     "libm",
     "ufmt",
 ] }

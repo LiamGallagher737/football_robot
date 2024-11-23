@@ -129,8 +129,8 @@ dependencies = [
  "lis3mdl 0.1.0 (git+https://github.com/rland93/lis3mdl.git?rev=0317b9175900292e1e51530d7bccae2e6983ed98)",
  "proc-macro2",
  "shared-bus",
+ "ufloat",
  "ufmt",
- "ufmt_float",
 ]
 
 [[package]]
@@ -231,7 +231,6 @@ dependencies = [
  "radian",
  "shared-bus",
  "ufmt",
- "ufmt_float",
 ]
 
 [[package]]
@@ -280,7 +279,6 @@ dependencies = [
  "ssd1306",
  "tcs3472",
  "ufmt",
- "ufmt_float",
 ]
 
 [[package]]
@@ -349,12 +347,6 @@ name = "memchr"
 version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
-
-[[package]]
-name = "micromath"
-version = "2.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3c8dda44ff03a2f238717214da50f65d5a53b45cd213a7370424ffdb6fae815"
 
 [[package]]
 name = "nb"
@@ -431,13 +423,13 @@ dependencies = [
 
 [[package]]
 name = "radian"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ff1e8460bfb1b3b4543fbd976631532821f82ba24e372b84e4390d0e5074874"
+checksum = "c5691cf005d77a2b736fe282dabf0e7f2bbcea43a4edbef8335d06ec27fd5cd9"
 dependencies = [
  "libm",
+ "ufloat",
  "ufmt",
- "ufmt_float",
 ]
 
 [[package]]
@@ -506,6 +498,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ufloat"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6256a15cc9842407941570b555af1f2a18da7429a592aabbd0ef857cd794d5d0"
+dependencies = [
+ "libm",
+ "ufmt",
+]
+
+[[package]]
 name = "ufmt"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -531,16 +533,6 @@ name = "ufmt-write"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e87a2ed6b42ec5e28cc3b94c09982969e9227600b2e3dcbc1db927a84c06bd69"
-
-[[package]]
-name = "ufmt_float"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7181bd69b8da1f7822e3b9ab86e89c1c9bd42a6558407c81821ed18738d097b4"
-dependencies = [
- "micromath",
- "ufmt",
-]
 
 [[package]]
 name = "unicase"
