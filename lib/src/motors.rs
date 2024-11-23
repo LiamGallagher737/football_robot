@@ -136,6 +136,13 @@ impl Motors {
         self.set_direction(Motor::Rear, direction);
     }
 
+    /// Stop all movement motors (not the dribbler).
+    pub fn stop(&mut self) {
+        for motor in [Motor::FrontLeft, Motor::FrontRight, Motor::Rear] {
+            self.set_speed(motor, 0);
+        }
+    }
+
     /// Set the speed of a single motor.
     pub fn set_speed(&mut self, motor: Motor, speed: u8) {
         match motor {

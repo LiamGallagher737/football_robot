@@ -1,23 +1,27 @@
 //! This is the functionality the robot uses when the ball cannot be found.
 
 use crate::Movement;
-use core::f64::consts::PI;
 use lib::{location::Location, motors::Turn};
 use radian::Angle;
+use ufmt::uwriteln;
 
-pub fn calculate_move(_location: Location, initial_heading: Angle, heading: Angle) -> Movement {
+pub fn calculate_move(
+    _location: Location,
+    initial_heading: Angle,
+    heading: Angle,
+    serial: &mut impl ufmt::uWrite,
+) -> Movement {
     // If the robot is off axis, correct it.
-    let distance = heading.distance(&initial_heading);
-    if distance.radians() > 0.4 {
-        let turn = if heading.is_clockwise_to(&initial_heading) {
+    let difference = heading.difference(&initial_heading);
+    uwriteln!(serial, "{}", difference);
+
+    if difference.abs().radians() > 0.4 {
+        let turn = if difference.radians() < 0.0 {
             Turn::Anticlockwise
         } else {
             Turn::Clockwise
         };
-        return Movement::Rotation {
-            turn,
-            speed: (distance.radians() / PI * 255.0).min(50.0) as u8,
-        };
+        return Movement::Rotation { turn, speed: 50 };
     }
 
     Movement::None

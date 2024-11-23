@@ -62,11 +62,11 @@ fn main() -> ! {
 
         let ball_heading: Option<f64> = None;
 
-        ufmt::uwriteln!(&mut serial, "{}", heading);
+        // ufmt::uwriteln!(&mut serial, "{}", heading);
 
         let movement = match ball_heading {
             Some(_heading) => todo!(),
-            None => dvd::calculate_move(location, initial_heading, heading),
+            None => dvd::calculate_move(location, initial_heading, heading, &mut serial),
         };
 
         match movement {
