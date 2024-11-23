@@ -1,5 +1,7 @@
 use core::panic::PanicInfo;
 
+use arduino_hal::hal::wdt;
+
 use crate::{display::Display, terminal::Terminal};
 
 #[panic_handler]
@@ -8,6 +10,10 @@ fn panic(info: &PanicInfo) -> ! {
     let dp = unsafe { arduino_hal::Peripherals::steal() };
     let pins = arduino_hal::pins!(dp);
     let serial = arduino_hal::default_serial!(dp, pins, 57600);
+
+    // Setup a watchdog and don't feed it to reset the device after timeout.
+    let mut watchdog = wdt::Wdt::new(dp.WDT, &dp.CPU.mcusr);
+    let _ = watchdog.start(wdt::Timeout::Ms250);
 
     let i2c = arduino_hal::I2c::new(
         dp.TWI,
